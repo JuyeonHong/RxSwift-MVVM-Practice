@@ -1,3 +1,5 @@
+![Swift](https://img.shields.io/static/v1?label=&message=Swift&color=E45530&logo=swift&logoColor=FFFFFF)
+
 # [Rx (ReactiveX)](http://reactivex.io/documentation/ko/observable.html)
 - Observable
 - Operators
