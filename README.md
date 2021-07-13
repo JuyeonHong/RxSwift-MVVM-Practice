@@ -46,10 +46,10 @@ rxswiftLoadImage(from: LARGE_IMAGE_URL)
 ```
 
 ### Operators
-#### Create: 새로운 Observable을 생성
-1. just  
-- 새로 생성한 Observable이 특정 항목을 생성해야할 때 사용
-- just에 넘겨준 element 그대로 전달
+#### - Create: 새로운 Observable을 생성
+- just  
+        새로 생성한 Observable이 특정 항목을 생성해야할 때 사용
+        just에 넘겨준 element 그대로 전달
 ```
 Observable.just("RxSwift")
             .subscribe(onNext: { str in
@@ -57,9 +57,9 @@ Observable.just("RxSwift")
             })
             .disposed(by: disposeBag)
 ```
-2. from  
-- 새로 생성한 Observable이 특정 항목을 생성하고, 구독 시점에 호출된 함수 등을 통해 생성된 항목을 리턴해야할 때 사용
-- just와 다르게 array(sequence) 요소를 하나씩 전달해준다
+- from  
+        새로 생성한 Observable이 특정 항목을 생성하고, 구독 시점에 호출된 함수 등을 통해 생성된 항목을 리턴해야할 때 사용
+        just와 다르게 array(sequence) 요소를 하나씩 전달해준다
 ```
 Observable.from(["This", "is", "RxSwift"])
             .subscribe(onNext: { str in
@@ -71,9 +71,9 @@ Observable.from(["This", "is", "RxSwift"])
             .disposed(by: disposeBag)
 ```
 
-#### Transform: Observable이 배출한 항목들을 변환
-map  
-map -> subscribe -> dispose 이런 흐름을 보고 **stream**이라고 한다  
+#### - Transform: Observable이 배출한 항목들을 변환
+- map  
+        map -> subscribe -> dispose 이런 흐름을 보고 **stream**이라고 한다  
 => **Observable Streams**
 ```
 Observable.just("hello")
@@ -94,8 +94,70 @@ Observable.from(["apple", "🍎"])
             .disposed(by: disposeBag)
 ```
 
-[More Opeators](http://reactivex.io/documentation/ko/operators.html)
+#### [More Opeators](http://reactivex.io/documentation/ko/operators.html)  
 
+#### [Marbles](https://rxmarbles.com/)
+
+#### Next / Error / Completed
+
+**.subscribe(on: (Event<String>) -> Void)**    
+- Event의 3가지 타입  
+        1. next: 데이터 전달  
+        2. error: **완료 X** | 스트림 종료, disposeBag에서 사라짐  
+        3. completed: **완료 O** | 스트림 종료, disposeBag에서 사라짐  
+- stream에서 operators를 다 사용한 후 최종적으로 데이터를 사용할 때 subscribe  
+- 다른 operator들은 리턴 타입이 stream(observable)인데  
+        subscribe는 리턴 타입이 disposable  
+        => disposed 처리 필요        
+
+```
+Observable.from(["Hello", "World", "Hi", "RxSwift"])
+            .subscribe { event in
+                switch event {
+                case .next(let str):
+                    print("데이터 전달! \(str)")
+                    
+                case .error(let error):
+                    print("에러! \(error.localizedDescription)")
+                    
+                case .completed:
+                    print("완료!")
+                    
+                }
+            }
+            .disposed(by: disposeBag)
+```
+
+출력결과  
+```
+데이터 전달! Hello
+데이터 전달! World
+데이터 전달! Hi
+데이터 전달! RxSwift
+완료!
+```
+        
+1. switch 귀찮으니까 
+```
+Observable.from(["Hello", "World", "Hi", "RxSwift"])
+            .subscribe(onNext: { str in
+                print("next: \(str)")
+            }, onCompleted: {
+                print("complete")
+            })
+```
+
+2. next를 따로 빼도 됨
+```
+func output(_ element: Any) {
+        print("next: \(element)")
+    }
+
+Observable.from(["Hello", "World", "Hi", "RxSwift"])
+            .subscribe(onNext: output(_:))
+            .disposed(by: disposeBag)
+```
+        
 ## Ref
 http://reactivex.io/documentation  
 https://www.youtube.com/channel/UCsrPur3UrxuwGmT1Jq6tkQw/videos
