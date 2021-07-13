@@ -58,7 +58,7 @@ Observable.just("RxSwift")
             .disposed(by: disposeBag)
 ```
 - from  
-        새로 생성한 Observable이 특정 항목을 생성하고, 구독 시점에 호출된 함수 등을 통해 생성된 항목을 리턴해야할 때 사용
+        새로 생성한 Observable이 특정 항목을 생성하고, 구독 시점에 호출된 함수 등을 통해 생성된 항목을 리턴해야할 때 사용  
         just와 다르게 array(sequence) 요소를 하나씩 전달해준다
 ```
 Observable.from(["This", "is", "RxSwift"])
