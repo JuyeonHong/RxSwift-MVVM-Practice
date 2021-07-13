@@ -46,9 +46,10 @@ rxswiftLoadImage(from: LARGE_IMAGE_URL)
 ```
 
 ### Operators
-#### Observable을 create해주는 방법
+#### Create: 새로운 Observable을 생성
 1. just  
-just에 넘겨준 element 그대로 전달
+- 새로 생성한 Observable이 특정 항목을 생성해야할 때 사용
+- just에 넘겨준 element 그대로 전달
 ```
 Observable.just("RxSwift")
             .subscribe(onNext: { str in
@@ -57,7 +58,8 @@ Observable.just("RxSwift")
             .disposed(by: disposeBag)
 ```
 2. from  
-just와 다르게 array(sequence) 요소를 하나씩 전달해준다
+- 새로 생성한 Observable이 특정 항목을 생성하고, 구독 시점에 호출된 함수 등을 통해 생성된 항목을 리턴해야할 때 사용
+- just와 다르게 array(sequence) 요소를 하나씩 전달해준다
 ```
 Observable.from(["This", "is", "RxSwift"])
             .subscribe(onNext: { str in
@@ -69,7 +71,8 @@ Observable.from(["This", "is", "RxSwift"])
             .disposed(by: disposeBag)
 ```
 
-3. map  
+#### Transform: Observable이 배출한 항목들을 변환
+map  
 map -> subscribe -> dispose 이런 흐름을 보고 **stream**이라고 한다  
 => **Observable Streams**
 ```
@@ -90,3 +93,9 @@ Observable.from(["apple", "🍎"])
             })
             .disposed(by: disposeBag)
 ```
+
+[More Opeators](http://reactivex.io/documentation/ko/operators.html)
+
+## Ref
+http://reactivex.io/documentation  
+https://www.youtube.com/channel/UCsrPur3UrxuwGmT1Jq6tkQw/videos
