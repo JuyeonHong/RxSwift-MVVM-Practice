@@ -94,11 +94,11 @@ Observable.from(["apple", "🍎"])
             .disposed(by: disposeBag)
 ```
 
-#### [More Opeators](http://reactivex.io/documentation/ko/operators.html)  
+#### - [More Opeators](http://reactivex.io/documentation/ko/operators.html)  
 
-#### [Marbles](https://rxmarbles.com/)
+#### - [Marbles](https://rxmarbles.com/)
 
-#### Next / Error / Completed
+#### - Next / Error / Completed
 
 **.subscribe(on: (Event<String>) -> Void)**    
 - Event의 3가지 타입  
