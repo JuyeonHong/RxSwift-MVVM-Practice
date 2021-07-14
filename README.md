@@ -100,11 +100,13 @@ Observable.from(["apple", "🍎"])
 
 #### - Next / Error / Completed
 
-**.subscribe(on: (Event<String>) -> Void)**    
+**subscribe(on: (Event<String>) -> Void)**    
 - Event의 3가지 타입  
         1. next: 데이터 전달  
         2. error: **완료 X** | 스트림 종료, disposeBag에서 사라짐  
         3. completed: **완료 O** | 스트림 종료, disposeBag에서 사라짐  
+        
+- Observable이 배출하는 항목과 알림을 기반으로 동작  
 - stream에서 operators를 다 사용한 후 최종적으로 데이터를 사용할 때 subscribe  
 - 다른 operator들은 리턴 타입이 stream(observable)인데  
         subscribe는 리턴 타입이 disposable  
@@ -162,6 +164,7 @@ Observable.from(["Hello", "World", "Hi", "RxSwift"])
 ## Scheduler  
 
 1. observeOn(scheduler: ImmediateSchedulerType)  
+        - 옵저버가 어느 스케줄러에서 Observable을 관찰할지 명시
         - 선언 위치 상관 O  
         - observable이 사용할 스레드가 어느 시점에서 할당되는지에 따라 그 후에 호출되는 operator가 영향을 받음  
         ```
@@ -171,14 +174,26 @@ Observable.from(["Hello", "World", "Hi", "RxSwift"])
         .observeOn(ConcurrentDispatchQueueScheduler(qos: .default))
         ```: concurrent queue에서 실행 (async)  
 
-2. subscribeOn(scheduler: ImmediateSchedulerType) 
+2. subscribeOn(scheduler: ImmediateSchedulerType)  
+        - Observable을 구독할 때 사용할 스케줄러를 명시  
         - 선언 위치 상관 X  
         - Observable이 subscribe 될 때부터 스케줄러를 적용하겠다는 뜻  
         ```
         .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default)) 
         ```  
         
-        
+## Side-Effect
+- subscribeOn을 사용하거나 do를 사용
+```
+.do(onNext: { image in
+                self.imageView.image = image
+            })
+```  
+```
+.subscribe(onNext: { image in
+                self.imageView.image = image
+            })
+```  
         
 ## Ref
 http://reactivex.io/documentation  
