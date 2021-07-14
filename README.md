@@ -192,6 +192,21 @@ Observable.from(["apple", "🍎"])
                 self.imageView.image = image
             })
 ```  
+
+        
+### Subject 
+ 데이터도 넣을 수 있고, subscribe도 가능  
+ 외부에서 통제가 가능한 Observable
+<br>
+
+- AsyncSubject  
+  - 끝이 나야 데이터 전달
+- BehaviorSubject  
+  - Observable인데 스스로 데이터를 발생시킬 수 있음
+- PublishSubject  
+- ReplaySubject  
+
+        
         
 ## Ref
 [RxSwift 4시간에 끝내기 시즌0](http://reactivex.io/documentation)  
