@@ -15,7 +15,8 @@ Async한 작업들을 간결하게 처리하기 위해서
 - Bolts
 
 ## 사용 방법
-### Async / Observable / Dispose
+### Observable  
+with Async & Dispose
 ```
 func rxswiftLoadImage(from imageUrl: String) -> Observable<UIImage?> {
         return Observable.create { seal in
