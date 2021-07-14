@@ -157,6 +157,28 @@ Observable.from(["Hello", "World", "Hi", "RxSwift"])
             .subscribe(onNext: output(_:))
             .disposed(by: disposeBag)
 ```
+
+        
+## Scheduler  
+
+1. observeOn(scheduler: ImmediateSchedulerType)  
+        - 선언 위치 상관 O  
+        - observable이 사용할 스레드가 어느 시점에서 할당되는지에 따라 그 후에 호출되는 operator가 영향을 받음  
+        ```
+        .observeOn(MainScheduler.instance)
+        ```: main thread에서 실행  
+        ```
+        .observeOn(ConcurrentDispatchQueueScheduler(qos: .default))
+        ```: concurrent queue에서 실행 (async)  
+
+2. subscribeOn(scheduler: ImmediateSchedulerType) 
+        - 선언 위치 상관 X  
+        - Observable이 subscribe 될 때부터 스케줄러를 적용하겠다는 뜻  
+        ```
+        .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default)) 
+        ```  
+        
+        
         
 ## Ref
 http://reactivex.io/documentation  
