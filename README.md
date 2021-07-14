@@ -196,5 +196,5 @@ Observable.from(["Hello", "World", "Hi", "RxSwift"])
 ```  
         
 ## Ref
-http://reactivex.io/documentation  
+[RxSwift 4시간에 끝내기 시즌0](http://reactivex.io/documentation)  
 https://www.youtube.com/channel/UCsrPur3UrxuwGmT1Jq6tkQw/videos
