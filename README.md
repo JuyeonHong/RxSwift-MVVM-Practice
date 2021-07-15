@@ -162,23 +162,29 @@ Observable.from(["apple", "🍎"])
 ### Scheduler  
 
 1. observeOn(scheduler: ImmediateSchedulerType)  
-        - 옵저버가 어느 스케줄러에서 Observable을 관찰할지 명시
-        - 선언 위치 상관 O  
-        - observable이 사용할 스레드가 어느 시점에서 할당되는지에 따라 그 후에 호출되는 operator가 영향을 받음  
-        ```swift
-        .observeOn(MainScheduler.instance)
-        ```: main thread에서 실행  
-        ```swift
-        .observeOn(ConcurrentDispatchQueueScheduler(qos: .default))
-        ```: concurrent queue에서 실행 (async)  
+ - 옵저버가 어느 스케줄러에서 Observable을 관찰할지 명시
+ - 선언 위치 상관 O  
+ - observable이 사용할 스레드가 어느 시점에서 할당되는지에 따라 그 후에 호출되는 operator가 영향을 받음  
 
-2. subscribeOn(scheduler: ImmediateSchedulerType)  
-        - Observable을 구독할 때 사용할 스케줄러를 명시  
-        - 선언 위치 상관 X  
-        - Observable이 subscribe 될 때부터 스케줄러를 적용하겠다는 뜻  
-        ```swift
-        .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default)) 
-        ```  
+```swift
+.observeOn(MainScheduler.instance) // : main thread에서 실행
+```
+        
+```swift
+ .observeOn(ConcurrentDispatchQueueScheduler(qos: .default)) // concurrent queue에서 실행 (async) 
+``` 
+
+<br>
+
+2. subscribeOn(scheduler: ImmediateSchedulerType) 
+ - Observable을 구독할 때 사용할 스케줄러를 명시  
+ - 선언 위치 상관 X  
+ - Observable이 subscribe 될 때부터 스케줄러를 적용하겠다는 뜻  
+
+```swift
+.subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default)) 
+```  
+
         
 ### Side-Effect
 - subscribeOn을 사용하거나 do를 사용
