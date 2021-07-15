@@ -171,7 +171,7 @@ Observable.from(["apple", "🍎"])
 ```
         
 ```swift
- .observeOn(ConcurrentDispatchQueueScheduler(qos: .default)) // concurrent queue에서 실행 (async) 
+.observeOn(ConcurrentDispatchQueueScheduler(qos: .default)) // concurrent queue에서 실행 (async) 
 ``` 
 
 <br>
