@@ -212,8 +212,22 @@ Observable.from(["apple", "🍎"])
 - PublishSubject  
 - ReplaySubject  
 
-        
-        
+
+### BehaviorRelay  
+- Stream 종료 X (complete X, error X . accpet만 됨)  
+-->  주로 UI 그릴 때 사용
+- 반면, BehaviorSubject는 observable이니까 죽을 수 있음 (complete되거나 error나면 스트림 종료될 수 있기 때문)
+- ex
+ ```swift
+let loginEnable: BehaviorRelay<Bool> = BehaviorRelay(value: false)
+
+Observable.combineLatest(idValid, pwValid, resultSelector: { $0 && $1 })
+            .subscribe(onNext: { b in
+                self.loginEnable.accept(b)
+            })
+            .disposed(by: disposeBag)
+ ```
+
 ## Ref
 [RxSwift 4시간에 끝내기 시즌0](http://reactivex.io/documentation)  
 https://www.youtube.com/channel/UCsrPur3UrxuwGmT1Jq6tkQw/videos
