@@ -46,6 +46,7 @@ subscribe이 호출되어야 observable(seqence)이 생성됨
 <br>
 
 ### Operators
+> Sugar API
 #### - Create: 새로운 Observable을 생성
 - just  
         새로 생성한 Observable이 특정 항목을 생성해야할 때 사용
