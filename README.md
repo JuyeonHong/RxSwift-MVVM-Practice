@@ -42,6 +42,7 @@ rxswiftLoadImage(from: LARGE_IMAGE_URL)
             })
             .disposed(by: disposeBag) // 변수로 받아서 disposeBag에 insert하지 않고 바로 연결해서 사용하는 방법
 ```
+subscribe이 호출되어야 observable(seqence)이 생성됨
 <br>
 
 ### Operators
@@ -162,7 +163,7 @@ Observable.from(["apple", "🍎"])
 ### Scheduler  
 
 1. observeOn(scheduler: ImmediateSchedulerType)  
- - 옵저버가 어느 스케줄러에서 Observable을 관찰할지 명시
+ - Observable이 작업할 스레드 명시
  - 선언 위치 상관 O  
  - observable이 사용할 스레드가 어느 시점에서 할당되는지에 따라 그 후에 호출되는 operator가 영향을 받음  
 
@@ -177,9 +178,9 @@ Observable.from(["apple", "🍎"])
 <br>
 
 2. subscribeOn(scheduler: ImmediateSchedulerType) 
- - Observable을 구독할 때 사용할 스케줄러를 명시  
+ - Observable을 구독할 때 작업할 스케줄러를 명시 ( = seqence가 생성될 때 사용할 스케줄러 지정)  
  - 선언 위치 상관 X  
- - Observable이 subscribe 될 때부터 스케줄러를 적용하겠다는 뜻  
+ - Observable이 subscribe 될 때부터 스케줄러를 적용하겠다는 뜻    
 
 ```swift
 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default)) 
