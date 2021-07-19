@@ -213,9 +213,9 @@ Observable.from(["apple", "🍎"])
 - ReplaySubject  
 
 
-### BehaviorRelay  
-- Stream 종료 X (complete X, error X . accpet만 됨)  
--->  주로 UI 그릴 때 사용
+### BehaviorRelay   
+- Subject를 wrapping한 것
+- Stream 종료 X (complete X, error X . accpet만 됨) -->  주로 UI 그릴 때 사용
 - 반면, BehaviorSubject는 observable이니까 죽을 수 있음 (complete되거나 error나면 스트림 종료될 수 있기 때문)
 - ex
  ```swift
@@ -228,6 +228,18 @@ Observable.combineLatest(idValid, pwValid, resultSelector: { $0 && $1 })
             .disposed(by: disposeBag)
  ```
 
+### Driver
+- Observable을 wrapping한 것
+- Subject의 에러 안나는 용도로 만들어진게 Relay인 것처럼 Observable의 에러 안나는 용도로 만들어진 것  
+- error 방출 안함 --> UI 그릴 때 & MainScheduler에서 사용
+- ex 
+ ```swift
+pwField.rx.text.orEmpty
+             .asDriver()
+             .drive(onNext: ((String) -> Void)?, onCompleted: (() -> Void)?, onDisposed: (() -> Void)?)
+             .disposed(by: disposeBag)
+ ```
+        
 ## Ref
 [RxSwift 4시간에 끝내기 시즌0](http://reactivex.io/documentation)  
 https://www.youtube.com/channel/UCsrPur3UrxuwGmT1Jq6tkQw/videos
