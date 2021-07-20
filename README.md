@@ -36,36 +36,48 @@ private func downloadJsonAsync(_ url: String, _ completion: @escaping (String?) 
 ### TO-BE
 ```swift
 private func downloadJsonRx(_ url: String) -> Observable<String?> {
-        
-        return Observable.create() { f in
-            
-            DispatchQueue.global().async {
-                let url = URL(string: url)!
-                let data = try! Data(contentsOf: url)
-                let json = String(data: data, encoding: .utf8)
+        // 비동기로 생기는 데이터를 Observable로 감싸서 리턴하는 방법
+        return Observable.create() { emitter in
+            let url = URL(string: url)!
+            let task = URLSession.shared.dataTask(with: url) { data, response, err in
                 
-                DispatchQueue.main.async {
-                    f.onNext(json)
+                guard err == nil else {
+                    emitter.onError(err!)
+                    return
                 }
                 
+                if let res = data, let json = String(data: res, encoding: .utf8) {
+                    emitter.onNext(json)
+                }
+                
+                emitter.onCompleted()
             }
             
-            return Disposables.create()
+            task.resume()
+            
+            return Disposables.create() {
+                task.cancel()
+            }
         }
-        
     }
     
     
-    func onLoad() {
+func onLoad() {
         editView.text = ""
         self.setVisibleWithAnimation(self.activityIndicator, true)
         
+        // Observable로 오는 데이터를 받아서 처리하는 방법
+        
+        // 1 downloadJsonRx부터 ConcurrentDispatchQueueScheduler로 실행
         downloadJsonRx(MEMBER_LIST_URL)
+            .observeOn(MainScheduler.instance) // 2 여기 이후부터
+            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default)) // 1
+            // 2 main thread에서 실행
             .subscribe(onNext: { json in
                 self.editView.text = json
                 self.setVisibleWithAnimation(self.activityIndicator, false)
-            })
-            .disposed(by: disposeBag)
+        })
+        .disposed(by: disposeBag)
     }
 ```
 
@@ -77,7 +89,14 @@ private func downloadJsonRx(_ url: String) -> Observable<String?> {
 - Single
 
 ### Observable  
-with Async & Dispose
+- 생명주기
+ 1. create  
+ 2. subscribe  
+ 3. onNext  
+ ------ 끝 ------  
+ 5. onCompleted / onError    
+ 6. Disposed   
+- with Async & Dispose
 ```swift
 func rxswiftLoadImage(from imageUrl: String) -> Observable<UIImage?> {
         return Observable.create { seal in
@@ -226,10 +245,13 @@ Observable.from(["apple", "🍎"])
 <br>
         
 ### Scheduler  
-
+<img src=![image](https://user-images.githubusercontent.com/33366446/126285994-126ec63f-f320-4efa-b467-5f015ff09fb1.png) width="300" height="300"></center>  
+[이미지 출처: ReactiveX](http://reactivex.io/documentation/scheduler.html)
+        
+<br>
 1. observeOn(scheduler: ImmediateSchedulerType)  
  - Observable이 작업할 스레드 명시
- - 선언 위치 상관 O  
+ - observeOn 이후부터 스레드 변경처리 -> 선언 위치 상관 O     
  - observable이 사용할 스레드가 어느 시점에서 할당되는지에 따라 그 후에 호출되는 operator가 영향을 받음  
 
 ```swift
