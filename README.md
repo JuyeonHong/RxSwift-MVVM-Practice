@@ -3,7 +3,71 @@
 # [Rx (ReactiveX)](http://reactivex.io/documentation/ko/observable.html)
 
 > 사용 이유: Async한 작업들을 간결하게 처리하기 위해서  
+
+비동기적으로 생성되는 데이터를 completion같은 클로저로 전달하지 않고 리턴값으로 전달하기 위해서 만들어진 유틸리티
 <br>
+
+## Ex
+### AS-IS
+```swift
+private func downloadJsonAsync(_ url: String, _ completion: @escaping (String?) -> Void) {
+        DispatchQueue.global().async {
+            let url = URL(string: url)!
+            let data = try! Data(contentsOf: url)
+            let json = String(data: data, encoding: .utf8)
+            DispatchQueue.main.async {
+                completion(json)
+            }
+        }
+    }
+    
+    private func onLoadAsync() {
+        // main ---
+        editView.text = ""
+        self.setVisibleWithAnimation(self.activityIndicator, true)
+        
+        // global --
+        self.downloadJsonAsync(MEMBER_LIST_URL) { json in
+            self.editView.text = json
+            self.setVisibleWithAnimation(self.activityIndicator, false)
+        }
+    }
+```
+### TO-BE
+```swift
+private func downloadJsonRx(_ url: String) -> Observable<String?> {
+        
+        return Observable.create() { f in
+            
+            DispatchQueue.global().async {
+                let url = URL(string: url)!
+                let data = try! Data(contentsOf: url)
+                let json = String(data: data, encoding: .utf8)
+                
+                DispatchQueue.main.async {
+                    f.onNext(json)
+                }
+                
+            }
+            
+            return Disposables.create()
+        }
+        
+    }
+    
+    
+    func onLoad() {
+        editView.text = ""
+        self.setVisibleWithAnimation(self.activityIndicator, true)
+        
+        downloadJsonRx(MEMBER_LIST_URL)
+            .subscribe(onNext: { json in
+                self.editView.text = json
+                self.setVisibleWithAnimation(self.activityIndicator, false)
+            })
+            .disposed(by: disposeBag)
+    }
+```
 
 ## Contents
 - Observable
