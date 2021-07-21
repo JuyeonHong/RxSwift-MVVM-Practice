@@ -301,13 +301,13 @@ Observable.from(["apple", "🍎"])
 <br>
 
 - AsyncSubject  
-  - 끝이 나야 데이터 전달
+  - 끝나야 데이터 전달
 - BehaviorSubject  
   - 초기 값을 갖고 생성되고, subscribe한 시점 이후부터 발생한 이벤트만 전달 받음
 - PublishSubject  
   - 빈 값을 생성되고, subscribe한 시점 이후부터 발생한 이벤트만 전달 받음
 - ReplaySubject  
-  - bufferSize를 갖고 생성돠고, BehaviorSubject와 유사하지만 bufferSize만큼 최신 이벤트를 전달 
+  - bufferSize를 갖고 생성되고, BehaviorSubject와 유사하지만 bufferSize만큼 최신 이벤트를 전달 
 
 
 ### BehaviorRelay   
