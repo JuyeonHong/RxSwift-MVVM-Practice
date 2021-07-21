@@ -20,8 +20,9 @@ private func downloadJsonAsync(_ url: String, _ completion: @escaping (String?) 
             }
         }
     }
-    
-    private func onLoadAsync() {
+```
+```swift
+private func onLoadAsync() {
         // main ---
         editView.text = ""
         self.setVisibleWithAnimation(self.activityIndicator, true)
