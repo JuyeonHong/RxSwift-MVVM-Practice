@@ -245,13 +245,16 @@ Observable.from(["apple", "🍎"])
 <br>
         
 ### Scheduler  
-<img src=![image](https://user-images.githubusercontent.com/33366446/126285994-126ec63f-f320-4efa-b467-5f015ff09fb1.png) width="300" height="300"></center>  
-[이미지 출처: ReactiveX](http://reactivex.io/documentation/scheduler.html)
-        
+<img src = "https://user-images.githubusercontent.com/33366446/126285994-126ec63f-f320-4efa-b467-5f015ff09fb1.png" width="400px">  
+
+[이미지 출처: ReactiveX](http://reactivex.io/documentation/scheduler.html)  
+
+
 <br>
+
 1. observeOn(scheduler: ImmediateSchedulerType)  
  - Observable이 작업할 스레드 명시
- - observeOn 이후부터 스레드 변경처리 -> 선언 위치 상관 O     
+ - observeOn 이후부터 스레드 변경처리 -> 선언 위치 상관 O 즉, downStream에 영향  
  - observable이 사용할 스레드가 어느 시점에서 할당되는지에 따라 그 후에 호출되는 operator가 영향을 받음  
 
 ```swift
@@ -267,7 +270,7 @@ Observable.from(["apple", "🍎"])
 2. subscribeOn(scheduler: ImmediateSchedulerType) 
  - Observable을 구독할 때 작업할 스케줄러를 명시 ( = seqence가 생성될 때 사용할 스케줄러 지정)  
  - 선언 위치 상관 X  
- - Observable이 subscribe 될 때부터 스케줄러를 적용하겠다는 뜻    
+ - Observable이 subscribe 될 때부터 스케줄러를 적용하겠다는 뜻 --> upstream에 영향  
 
 ```swift
 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .default)) 
