@@ -243,6 +243,19 @@ Observable.from(["apple", "🍎"])
             .subscribe(onNext: output(_:))
             .disposed(by: disposeBag)
   ```
+
+  - **bind**를 사용하면 순환참조 문제 쉽게 해결 가능  
+  ```swift
+  .subscribe(onNext: { [weak self] in
+                self?.totalPrice.text = $0
+            })
+  ```
+  <center>⬇️</center>
+
+  ```swift
+  .bind(to: itemCountLabel.rx.text)
+  ```
+
 <br>
         
 ### Scheduler  
