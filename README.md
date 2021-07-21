@@ -33,10 +33,10 @@ private func downloadJsonAsync(_ url: String, _ completion: @escaping (String?) 
         }
     }
 ```
-### TO-BE
+### TO-BE  
+1. 비동기로 생기는 데이터를 Observable로 감싸서 리턴하는 방법
 ```swift
 private func downloadJsonRx(_ url: String) -> Observable<String?> {
-        // 비동기로 생기는 데이터를 Observable로 감싸서 리턴하는 방법
         return Observable.create() { emitter in
             let url = URL(string: url)!
             let task = URLSession.shared.dataTask(with: url) { data, response, err in
@@ -60,13 +60,13 @@ private func downloadJsonRx(_ url: String) -> Observable<String?> {
             }
         }
     }
-    
-    
+```
+
+2. Observable로 오는 데이터를 받아서 처리하는 방법  
+```swift
 func onLoad() {
         editView.text = ""
         self.setVisibleWithAnimation(self.activityIndicator, true)
-        
-        // Observable로 오는 데이터를 받아서 처리하는 방법
         
         // 1 downloadJsonRx부터 ConcurrentDispatchQueueScheduler로 실행
         downloadJsonRx(MEMBER_LIST_URL)
