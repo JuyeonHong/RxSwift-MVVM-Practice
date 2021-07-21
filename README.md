@@ -304,9 +304,17 @@ Observable.from(["apple", "🍎"])
 - AsyncSubject  
   - 끝나야 데이터 전달
 - BehaviorSubject  
+  <img src = "https://user-images.githubusercontent.com/33366446/126441898-46f912f5-6ab8-4df9-960c-f7c5c1af7809.png" width="300px">  
+
+  [이미지 출처: ReactiveX](http://reactivex.io/documentation/subject.html)  
+
   - 초기 값을 갖고 생성되고, subscribe한 시점 이후부터 발생한 이벤트만 전달 받음
+  - subscribe 하자마자 초기 값을 내려줌
 - PublishSubject  
-  - 빈 값을 생성되고, subscribe한 시점 이후부터 발생한 이벤트만 전달 받음
+   <img src = "http://reactivex.io/documentation/operators/images/S.PublishSubject.png" width="300px">  
+   [이미지 출처: ReactiveX](http://reactivex.io/documentation/subject.html)  
+
+  - 빈 값이 생성되고, subscribe한 시점 이후부터 발생한 이벤트만 전달 받음
 - ReplaySubject  
   - bufferSize를 갖고 생성되고, BehaviorSubject와 유사하지만 bufferSize만큼 최신 이벤트를 전달 
 
