@@ -126,7 +126,7 @@ rxswiftLoadImage(from: LARGE_IMAGE_URL)
             })
             .disposed(by: disposeBag) // 변수로 받아서 disposeBag에 insert하지 않고 바로 연결해서 사용하는 방법
 ```
-subscribe이 호출되어야 observable(seqence)이 생성됨
+subscribe이 호출되어야 observable(sequence)이 생성됨
 <br>
 
 ### Operators
