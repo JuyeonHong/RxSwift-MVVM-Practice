@@ -126,7 +126,18 @@ rxswiftLoadImage(from: LARGE_IMAGE_URL)
             })
             .disposed(by: disposeBag) // 변수로 받아서 disposeBag에 insert하지 않고 바로 연결해서 사용하는 방법
 ```
-subscribe이 호출되어야 observable(sequence)이 생성됨
+subscribe이 호출되어야 observable(sequence)이 생성됨  
+
+- Hot Observable & Cold Observable  
+  - Hot Observable  
+        - 생성되자마자 항목을 바로 배출 (옵저버 존재 여부와 상관 X)  
+        - Hot Observable을 구독하는 옵저버들은 항목들의 배출 중간부터 Observable을 구독할 수도 있음  
+        - ex) 마우스 이벤트, 클릭 이벤트, 키보드 이벤트 등
+  - Cold Observable  
+        - 옵저버(구독자)가 구독할 때까지 항목을 배출하지 X (옵저버 존재 여부와 상관 O)  
+        - Cold Observable을 구독하는 옵저버들은 Observable이 배출하는 모든 항목을 구독할 수 있도록 보장 O  
+        - ex) url 요청, 쿼리 서비스 등  
+
 <br>
 
 ### Operators
