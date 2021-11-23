@@ -5,6 +5,12 @@
 비동기적으로 생성되는 데이터를 completion같은 클로저로 전달하지 않고 리턴값으로 전달하기 위해서 만들어진 유틸리티
 <br>
 
+- 기존에 사용했던 비동기 처리:  
+  - NotifcationCenter
+  - Delegate Pattern
+  - Grand Central Dispatch
+  - Closures
+  - Combine
 ## Ex
 ### AS-IS
 ```swift
